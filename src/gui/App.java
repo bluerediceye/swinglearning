@@ -1,6 +1,6 @@
-import javax.swing.*;
+package gui;
 
-import static javax.swing.JFrame.EXIT_ON_CLOSE;
+import javax.swing.*;
 
 public class App {
     public static void main(String[] args) {

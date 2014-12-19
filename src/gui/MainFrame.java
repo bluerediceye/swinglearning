@@ -1,3 +1,7 @@
+package gui;
+
+import controller.Controller;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -13,16 +17,24 @@ public class MainFrame extends JFrame {
     private Toolbar toolbar;
     private FormPanel formPanel;
     private JFileChooser fileChooser;
+    private TablePanel tablePanel;
+    private Controller controller;
 
     public MainFrame() {
         super("Hello World");
 
         setLayout(new BorderLayout());
-        setMinimumSize(new Dimension(500, 400));
+        setMinimumSize(new Dimension(500, 600));
         toolbar = new Toolbar();
         textPanel = new TextPanel();
         formPanel = new FormPanel();
+        tablePanel = new TablePanel();
+        controller = new Controller();
+
+        tablePanel.setData(controller.getPeople());
+
         fileChooser = new JFileChooser();
+        fileChooser.addChoosableFileFilter(new PersonFileFilter());
 
         setJMenuBar(createMenuBar());
 
@@ -37,22 +49,15 @@ public class MainFrame extends JFrame {
         formPanel.setFormListener(new FormListener() {
                                       @Override
                                       public void formEventOccurred(FormEvent e) {
-                                          String name = e.getName();
-                                          String occupation = e.getOccupation();
-                                          int ageCat = e.getAgeCategory();
-                                          String empCat = e.getEmpCat();
-                                          String gender = e.getGender();
-                                          textPanel.appendText(name + " : "
-                                                  + occupation + " : "
-                                                  + ageCat + " : "
-                                                  + empCat +  " : " + gender + "\n");
+                                         controller.addPerson(e);
                                       }
                                   }
         );
 
         add(formPanel, BorderLayout.WEST);
         add(toolbar, BorderLayout.NORTH);
-        add(textPanel, BorderLayout.CENTER);
+//        add(textPanel, BorderLayout.CENTER);
+        add(tablePanel, BorderLayout.CENTER);
 
         setSize(600, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -118,7 +123,7 @@ public class MainFrame extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
 
-                /*String text = JOptionPane.showInputDialog(MainFrame.this,
+                /*String text = JOptionPane.showInputDialog(gui.MainFrame.this,
                         "Enter your user name.",
                         "Enter User Name", JOptionPane.OK_OPTION | JOptionPane.QUESTION_MESSAGE);
                 System.out.println(text);*/
