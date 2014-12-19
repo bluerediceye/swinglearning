@@ -18,6 +18,8 @@ public class MainFrame extends JFrame {
         toolbar = new Toolbar();
         textPanel = new TextPanel();
         formPanel = new FormPanel();
+        setJMenuBar(createMenuBar());
+
 
         toolbar.setStringListener(new StringListener() {
             @Override
@@ -49,5 +51,31 @@ public class MainFrame extends JFrame {
         setSize(600, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
+    }
+
+    private JMenuBar createMenuBar(){
+        JMenuBar menuBar = new JMenuBar();
+
+        //File->Export Data, File->Import Data, File->Exit
+        JMenu fileMenu = new JMenu("File");
+        JMenuItem exportData = new JMenuItem("Export Data...");
+        JMenuItem importData = new JMenuItem("Import Data...");
+        JMenuItem exitItem = new JMenuItem("Exit");
+        fileMenu.add(exportData);
+        fileMenu.add(importData);
+        fileMenu.addSeparator();
+        fileMenu.add(exitItem);
+
+        //Window->Show->Person Form
+        JMenu windowMenu = new JMenu("Window");
+        JMenu showMenu = new JMenu("Show");
+        JMenuItem showFormItem = new JMenuItem("Person Form");
+        showMenu.add(showFormItem);
+        windowMenu.add(showMenu);
+
+        menuBar.add(fileMenu);
+        menuBar.add(windowMenu);
+
+        return menuBar;
     }
 }
