@@ -1,5 +1,8 @@
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 /**
  * Created by ming.li on 18/12/2014.
@@ -69,12 +72,33 @@ public class MainFrame extends JFrame {
         //Window->Show->Person Form
         JMenu windowMenu = new JMenu("Window");
         JMenu showMenu = new JMenu("Show");
-        JMenuItem showFormItem = new JMenuItem("Person Form");
+        JCheckBoxMenuItem showFormItem = new JCheckBoxMenuItem("Person Form");
+        showFormItem.setSelected(true);
         showMenu.add(showFormItem);
         windowMenu.add(showMenu);
 
         menuBar.add(fileMenu);
         menuBar.add(windowMenu);
+
+        showFormItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JCheckBoxMenuItem menuItem = (JCheckBoxMenuItem) e.getSource();
+                formPanel.setVisible(menuItem.isSelected());
+            }
+        });
+
+        fileMenu.setMnemonic(KeyEvent.VK_F);
+        exitItem.setMnemonic(KeyEvent.VK_X);
+
+        exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
+
+        exitItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.exit(0);
+            }
+        });
 
         return menuBar;
     }

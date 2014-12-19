@@ -3,6 +3,7 @@ import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
 
 @SuppressWarnings("FieldCanBeLocal")
 public class FormPanel extends JPanel {
@@ -76,6 +77,11 @@ public class FormPanel extends JPanel {
         ageList.setSelectedIndex(1);
         okBtn = new JButton("OK");
 
+        //Setup mnemonics
+        okBtn.setMnemonic(KeyEvent.VK_O);
+
+        nameLabel.setDisplayedMnemonic(KeyEvent.VK_N);
+        nameLabel.setLabelFor(nameField);
 
         //Setup combo box
         DefaultComboBoxModel<String> empModel = new DefaultComboBoxModel<>();
