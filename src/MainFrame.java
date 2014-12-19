@@ -10,7 +10,7 @@ public class MainFrame extends JFrame {
     private Toolbar toolbar;
     private FormPanel formPanel;
 
-    public MainFrame(){
+    public MainFrame() {
         super("Hello World");
 
         setLayout(new BorderLayout());
@@ -27,13 +27,15 @@ public class MainFrame extends JFrame {
         });
 
         formPanel.setFormListener(new FormListener() {
-            @Override
-            public void formEventOccured(FormEvent e) {
-                String name = e.getName();
-                String occupation = e.getOccupation();
-                textPanel.appendText(name + " : " + occupation + "\n");
-            }
-        }
+                                      @Override
+                                      public void formEventOccurred(FormEvent e) {
+                                          String name = e.getName();
+                                          String occupation = e.getOccupation();
+                                          int ageCat = e.getAgeCategory();
+                                          String empCat = e.getEmpCat();
+                                          textPanel.appendText(name + " : " + occupation + " : " + ageCat + " : " + empCat + "\n");
+                                      }
+                                  }
         );
 
         add(formPanel, BorderLayout.WEST);
