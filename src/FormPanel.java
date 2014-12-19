@@ -12,6 +12,7 @@ public class FormPanel extends JPanel {
     private JTextField nameField;
     private JTextField occupationField;
     private JButton okBtn;
+    private FormListener formListener;
 
 
     public FormPanel() {
@@ -30,6 +31,10 @@ public class FormPanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 String name = nameField.getText();
                 String occupation = occupationField.getText();
+                FormEvent ev = new FormEvent(this, name, occupation);
+                if(formListener != null){
+                    formListener.formEventOccured(ev);
+                }
             }
         });
 
@@ -86,5 +91,9 @@ public class FormPanel extends JPanel {
         gc.insets = new Insets(0, 0, 0, 0);
         add(okBtn, gc);
 
+    }
+
+    public void setFormListener(FormListener formListener) {
+        this.formListener = formListener;
     }
 }

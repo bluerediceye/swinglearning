@@ -1,7 +1,5 @@
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 
 /**
  * Created by ming.li on 18/12/2014.
@@ -27,6 +25,16 @@ public class MainFrame extends JFrame {
                 textPanel.appendText(text);
             }
         });
+
+        formPanel.setFormListener(new FormListener() {
+            @Override
+            public void formEventOccured(FormEvent e) {
+                String name = e.getName();
+                String occupation = e.getOccupation();
+                textPanel.appendText(name + " : " + occupation + "\n");
+            }
+        }
+        );
 
         add(formPanel, BorderLayout.WEST);
         add(toolbar, BorderLayout.NORTH);
