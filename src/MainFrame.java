@@ -12,15 +12,18 @@ public class MainFrame extends JFrame {
     private TextPanel textPanel;
     private Toolbar toolbar;
     private FormPanel formPanel;
+    private JFileChooser fileChooser;
 
     public MainFrame() {
         super("Hello World");
 
         setLayout(new BorderLayout());
-
+        setMinimumSize(new Dimension(500, 400));
         toolbar = new Toolbar();
         textPanel = new TextPanel();
         formPanel = new FormPanel();
+        fileChooser = new JFileChooser();
+
         setJMenuBar(createMenuBar());
 
 
@@ -61,11 +64,11 @@ public class MainFrame extends JFrame {
 
         //File->Export Data, File->Import Data, File->Exit
         JMenu fileMenu = new JMenu("File");
-        JMenuItem exportData = new JMenuItem("Export Data...");
-        JMenuItem importData = new JMenuItem("Import Data...");
+        JMenuItem exportDataItem = new JMenuItem("Export Data...");
+        JMenuItem importDataItem = new JMenuItem("Import Data...");
         JMenuItem exitItem = new JMenuItem("Exit");
-        fileMenu.add(exportData);
-        fileMenu.add(importData);
+        fileMenu.add(exportDataItem);
+        fileMenu.add(importDataItem);
         fileMenu.addSeparator();
         fileMenu.add(exitItem);
 
@@ -93,10 +96,39 @@ public class MainFrame extends JFrame {
 
         exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
 
+        importDataItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION){
+                    System.out.println(fileChooser.getSelectedFile());
+                }
+            }
+        });
+
+        exportDataItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION){
+                    System.out.println(fileChooser.getSelectedFile());
+                }
+            }
+        });
+
         exitItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+
+                /*String text = JOptionPane.showInputDialog(MainFrame.this,
+                        "Enter your user name.",
+                        "Enter User Name", JOptionPane.OK_OPTION | JOptionPane.QUESTION_MESSAGE);
+                System.out.println(text);*/
+
+                int action = JOptionPane.showConfirmDialog(MainFrame.this,
+                        "Do you really want to exit the application?",
+                        "Confirm exit",JOptionPane.OK_CANCEL_OPTION );
+                if(action == JOptionPane.OK_OPTION){
+                    System.exit(0);
+                }
             }
         });
 
