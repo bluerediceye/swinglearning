@@ -5,6 +5,7 @@ import model.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -78,5 +79,21 @@ public class Controller {
 
     public void removePerson(int index) {
         database.removePerson(index);
+    }
+
+    public void load() throws SQLException {
+        database.load();
+    }
+
+    public void connect() throws Exception {
+        database.connect();
+    }
+
+    public void save() throws SQLException {
+        database.save();
+    }
+
+    public void disConnect(){
+        database.disConnect();
     }
 }

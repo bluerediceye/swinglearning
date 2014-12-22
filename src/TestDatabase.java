@@ -18,6 +18,11 @@ public class TestDatabase {
         }
 
         db.addPerson(new Person("Ming", "Developer", AgeCategory.adult, EmploymentCategory.Employed, "???", false, Gender.Male));
+        db.addPerson(new Person("Ming2", "Developer", AgeCategory.adult, EmploymentCategory.Employed, "???", false, Gender.Male));
+        db.addPerson(new Person("Ming3", "Developer", AgeCategory.adult, EmploymentCategory.Employed, "???", false, Gender.Male));
+        db.addPerson(new Person("Ming4", "Developer", AgeCategory.adult, EmploymentCategory.Employed, "???", false, Gender.Male));
+        db.addPerson(new Person("Ming5", "Developer", AgeCategory.adult, EmploymentCategory.Employed, "???", false, Gender.Male));
+        db.addPerson(new Person("Ming6", "Developer", AgeCategory.adult, EmploymentCategory.Employed, "???", false, Gender.Male));
 
         try {
             db.save();
@@ -25,6 +30,12 @@ public class TestDatabase {
             e.printStackTrace();
         }
 
+
+        try {
+            db.load();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         db.disConnect();
     }
 }

@@ -8,14 +8,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.prefs.Preferences;
+
+import static java.awt.event.ActionEvent.CTRL_MASK;
 
 /**
  * Created by ming.li on 18/12/2014.
  */
 public class MainFrame extends JFrame {
 
-    private TextPanel textPanel;
     private Toolbar toolbar;
     private FormPanel formPanel;
     private JFileChooser fileChooser;
@@ -30,7 +32,6 @@ public class MainFrame extends JFrame {
         setLayout(new BorderLayout());
         setMinimumSize(new Dimension(500, 600));
         toolbar = new Toolbar();
-        textPanel = new TextPanel();
         formPanel = new FormPanel();
         tablePanel = new TablePanel();
         controller = new Controller();
@@ -66,10 +67,27 @@ public class MainFrame extends JFrame {
         setJMenuBar(createMenuBar());
 
 
-        toolbar.setStringListener(new StringListener() {
+        toolbar.setToolbarListener(new ToolbarListener() {
             @Override
-            public void textEmitted(String text) {
-                textPanel.appendText(text);
+            public void saveEventOccured() {
+                connect();
+
+                try {
+                    controller.save();
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(MainFrame.this, "Can't save into database", "Database Connection Problem", JOptionPane.ERROR_MESSAGE);
+                }
+            }
+
+            @Override
+            public void refreshEventOccured() {
+                connect();
+                try {
+                    controller.load();
+                } catch (SQLException e) {
+                    JOptionPane.showMessageDialog(MainFrame.this, "Can't load from database", "Database Connection Problem", JOptionPane.ERROR_MESSAGE);
+                }
+                tablePanel.refresh();
             }
         });
 
@@ -90,6 +108,14 @@ public class MainFrame extends JFrame {
         setSize(600, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setVisible(true);
+    }
+
+    private void connect() {
+        try {
+            controller.connect();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Can't connect to database", "Database Connection Problem", JOptionPane.ERROR_MESSAGE);
+        }
     }
 
     private JMenuBar createMenuBar() {
@@ -138,10 +164,10 @@ public class MainFrame extends JFrame {
         fileMenu.setMnemonic(KeyEvent.VK_F);
         exitItem.setMnemonic(KeyEvent.VK_X);
 
-        exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, ActionEvent.CTRL_MASK));
-        importDataItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, ActionEvent.CTRL_MASK));
-        exportDataItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, ActionEvent.CTRL_MASK));
-        prefsItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, ActionEvent.CTRL_MASK));
+        exitItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_X, CTRL_MASK));
+        importDataItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_I, CTRL_MASK));
+        exportDataItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_O, CTRL_MASK));
+        prefsItem.setAccelerator(KeyStroke.getKeyStroke(KeyEvent.VK_P, CTRL_MASK));
 
         importDataItem.addActionListener(new ActionListener() {
             @Override

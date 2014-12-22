@@ -99,11 +99,36 @@ public class Database {
                 updateStmt.setString(col++, occupation);
                 updateStmt.setInt(col++, id);
             }
-
-            updateStmt.close();
-            insertStmt.close();
-            checkStmt.close();
         }
+
+        updateStmt.close();
+        insertStmt.close();
+        checkStmt.close();
+    }
+
+    public void load() throws SQLException {
+        people.clear();
+        String sql = "select id, name,age,employment_status,tax_id,us_citizen,gender,occupation from people order by name";
+        Statement selectStmt = conn.createStatement();
+
+        ResultSet results = selectStmt.executeQuery(sql);
+
+        while(results.next()){
+            int id = results.getInt("id");
+            String name = results.getString("name");
+            String age = results.getString("age");
+            String emp = results.getString("employment_status");
+            String tax = results.getString("tax_id");
+            boolean isUs = results.getBoolean("us_citizen");
+            String gender = results.getString("gender");
+            String occupation = results.getString("occupation");
+
+            Person person = new Person(id, name, occupation, AgeCategory.valueOf(age),EmploymentCategory.valueOf(emp), tax, isUs, Gender.valueOf(gender));
+            addPerson(person);
+            System.out.println(person);
+        }
+
+        selectStmt.close();
     }
 
     public void addPerson(Person person) {
