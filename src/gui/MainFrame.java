@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.io.IOException;
+import java.util.prefs.Preferences;
 
 /**
  * Created by ming.li on 18/12/2014.
@@ -20,6 +21,8 @@ public class MainFrame extends JFrame {
     private JFileChooser fileChooser;
     private TablePanel tablePanel;
     private Controller controller;
+    private PrefsDialog prefsDialog;
+    private Preferences prefs;
 
     public MainFrame() {
         super("Hello World");
@@ -31,17 +34,31 @@ public class MainFrame extends JFrame {
         formPanel = new FormPanel();
         tablePanel = new TablePanel();
         controller = new Controller();
+        prefsDialog = new PrefsDialog(this);
+
+        prefs = Preferences.userRoot().node("db");
 
         tablePanel.setData(controller.getPeople());
-        tablePanel.setPersonTableListener(new PersonTableListener(){
+        tablePanel.setPersonTableListener(new PersonTableListener() {
             @Override
-            public void rowDeleted(int row){
+            public void rowDeleted(int row) {
                 controller.removePerson(row);
             }
         });
 
+        prefsDialog.setPrefsListener(new PrefsListener() {
+            @Override
+            public void preferencesSet(String user, String password, int port) {
+                prefs.put("user", user);
+                prefs.put("password", password);
+                prefs.putInt("port", port);
+            }
+        });
 
-
+        String user = prefs.get("user", "");
+        String password = prefs.get("password", "");
+        int port = prefs.getInt("port", 3306);
+        prefsDialog.setDefaults(user, password, port);
 
         fileChooser = new JFileChooser();
         fileChooser.addChoosableFileFilter(new PersonFileFilter());
@@ -91,13 +108,24 @@ public class MainFrame extends JFrame {
         //Window->Show->Person Form
         JMenu windowMenu = new JMenu("Window");
         JMenu showMenu = new JMenu("Show");
+        JMenuItem prefsItem = new JMenuItem("Preferences...");
+
         JCheckBoxMenuItem showFormItem = new JCheckBoxMenuItem("Person Form");
         showFormItem.setSelected(true);
         showMenu.add(showFormItem);
         windowMenu.add(showMenu);
+        windowMenu.add(prefsItem);
 
         menuBar.add(fileMenu);
         menuBar.add(windowMenu);
+
+        prefsItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                prefsDialog.setVisible(true);
+            }
+        });
+
 
         showFormItem.addActionListener(new ActionListener() {
             @Override
