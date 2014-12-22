@@ -49,7 +49,8 @@ public class MainFrame extends JFrame {
         formPanel.setFormListener(new FormListener() {
                                       @Override
                                       public void formEventOccurred(FormEvent e) {
-                                         controller.addPerson(e);
+                                          controller.addPerson(e);
+                                          tablePanel.refresh();
                                       }
                                   }
         );
@@ -64,7 +65,7 @@ public class MainFrame extends JFrame {
         setVisible(true);
     }
 
-    private JMenuBar createMenuBar(){
+    private JMenuBar createMenuBar() {
         JMenuBar menuBar = new JMenuBar();
 
         //File->Export Data, File->Import Data, File->Exit
@@ -104,7 +105,7 @@ public class MainFrame extends JFrame {
         importDataItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION){
+                if (fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
                     System.out.println(fileChooser.getSelectedFile());
                 }
             }
@@ -113,7 +114,7 @@ public class MainFrame extends JFrame {
         exportDataItem.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION){
+                if (fileChooser.showOpenDialog(MainFrame.this) == JFileChooser.APPROVE_OPTION) {
                     System.out.println(fileChooser.getSelectedFile());
                 }
             }
@@ -130,8 +131,8 @@ public class MainFrame extends JFrame {
 
                 int action = JOptionPane.showConfirmDialog(MainFrame.this,
                         "Do you really want to exit the application?",
-                        "Confirm exit",JOptionPane.OK_CANCEL_OPTION );
-                if(action == JOptionPane.OK_OPTION){
+                        "Confirm exit", JOptionPane.OK_CANCEL_OPTION);
+                if (action == JOptionPane.OK_OPTION) {
                     System.exit(0);
                 }
             }

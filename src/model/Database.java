@@ -1,5 +1,6 @@
 package model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -9,6 +10,7 @@ public class Database {
     private List<Person> people;
 
     public Database() {
+        people = new ArrayList<>();
     }
 
     public Database(List<Person> people) {

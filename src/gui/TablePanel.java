@@ -4,6 +4,7 @@ import model.Person;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.List;
 
 /**
  * Created by ming.li on 19/12/2014.
@@ -17,11 +18,14 @@ public class TablePanel extends JPanel {
         tableModel = new PersonTableModel();
         table = new JTable(tableModel);
         setLayout(new BorderLayout());
-        add(table, BorderLayout.CENTER);
-
+        add(new JScrollPane(table), BorderLayout.CENTER);
     }
 
-    public void setData(java.util.List<Person> db){
+    public void setData(List<Person> db){
         tableModel.setData(db);
+    }
+
+    public void refresh() {
+        tableModel.fireTableDataChanged();
     }
 }
