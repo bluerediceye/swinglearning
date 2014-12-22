@@ -13,7 +13,7 @@ import java.util.List;
 public class Controller {
     private Database database = new Database();
 
-    public List<Person> getPeople(){
+    public List<Person> getPeople() {
         return database.getPeople();
     }
 

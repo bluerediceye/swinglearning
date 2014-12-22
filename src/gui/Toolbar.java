@@ -32,12 +32,12 @@ public class Toolbar extends JPanel implements ActionListener {
         JButton clicked = (JButton) e.getSource();
 //        textPanel.appendText(clicked.getText());
 
-        if(clicked == helloButton){
-            if(stringListener != null){
+        if (clicked == helloButton) {
+            if (stringListener != null) {
                 stringListener.textEmitted("Hello");
             }
-        }else if(clicked == goodbyeButton){
-            if(stringListener != null){
+        } else if (clicked == goodbyeButton) {
+            if (stringListener != null) {
                 stringListener.textEmitted("Good bye");
             }
         }

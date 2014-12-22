@@ -27,8 +27,6 @@ public class FormPanel extends JPanel {
     private ButtonGroup genderGroup;
 
 
-
-
     public FormPanel() {
         Dimension dim = getPreferredSize();
         dim.width = 250;

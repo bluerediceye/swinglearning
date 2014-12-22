@@ -45,7 +45,7 @@ public class TablePanel extends JPanel {
             public void actionPerformed(ActionEvent e) {
                 int row = table.getSelectedRow();
 
-                if(personTableListener != null){
+                if (personTableListener != null) {
                     personTableListener.rowDeleted(row);
                     tableModel.fireTableRowsDeleted(row, row);
                 }

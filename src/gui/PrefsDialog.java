@@ -19,12 +19,12 @@ public class PrefsDialog extends JDialog {
     private JPasswordField passwordField;
     private PrefsListener prefsListener;
 
-    public PrefsDialog(JFrame parent){
+    public PrefsDialog(JFrame parent) {
         super(parent, "Preferences", false);
 
         okButton = new JButton("OK");
         cancelButton = new JButton("Cancel");
-        spinnerNumberModel = new SpinnerNumberModel(3306,0,9999,1);
+        spinnerNumberModel = new SpinnerNumberModel(3306, 0, 9999, 1);
         portSpinner = new JSpinner(spinnerNumberModel);
         userField = new JTextField(10);
         passwordField = new JPasswordField(10);
@@ -38,7 +38,7 @@ public class PrefsDialog extends JDialog {
                 Integer value = (Integer) portSpinner.getValue();
                 String user = userField.getText();
                 String password = new String(passwordField.getPassword());
-                if(prefsListener != null){
+                if (prefsListener != null) {
                     prefsListener.preferencesSet(user, password, value);
                 }
                 setVisible(false);
@@ -61,7 +61,7 @@ public class PrefsDialog extends JDialog {
         JPanel buttonPanel = new JPanel();
 
         int space = 15;
-        Border spaceBorder = BorderFactory.createEmptyBorder(space,space, space, space);
+        Border spaceBorder = BorderFactory.createEmptyBorder(space, space, space, space);
         Border titleBorder = BorderFactory.createTitledBorder("Database preferences");
 
         controlPanel.setBorder(BorderFactory.createCompoundBorder(spaceBorder, titleBorder));
@@ -70,8 +70,8 @@ public class PrefsDialog extends JDialog {
         controlPanel.setLayout(new GridBagLayout());
         GridBagConstraints gc = new GridBagConstraints();
         gc.gridy = 0;
-        Insets rightPadding = new Insets(0,0,0,15);
-        Insets noPadding = new Insets(0,0,0,0);
+        Insets rightPadding = new Insets(0, 0, 0, 15);
+        Insets noPadding = new Insets(0, 0, 0, 0);
         //First row
 
         gc.weightx = 1;
@@ -85,7 +85,7 @@ public class PrefsDialog extends JDialog {
 
         gc.anchor = GridBagConstraints.WEST;
         gc.insets = noPadding;
-        gc.gridx ++;
+        gc.gridx++;
         controlPanel.add(userField, gc);
 
         //next row
@@ -101,7 +101,7 @@ public class PrefsDialog extends JDialog {
 
         gc.anchor = GridBagConstraints.WEST;
         gc.insets = noPadding;
-        gc.gridx ++;
+        gc.gridx++;
         controlPanel.add(passwordField, gc);
 
         //Next row
@@ -116,7 +116,7 @@ public class PrefsDialog extends JDialog {
 
         gc.anchor = GridBagConstraints.WEST;
         gc.insets = noPadding;
-        gc.gridx ++;
+        gc.gridx++;
         controlPanel.add(portSpinner, gc);
 
         //Button panel
@@ -134,7 +134,7 @@ public class PrefsDialog extends JDialog {
 
     }
 
-    public void setDefaults(String user, String password, int port){
+    public void setDefaults(String user, String password, int port) {
         userField.setText(user);
         passwordField.setText(password);
         portSpinner.setValue(port);

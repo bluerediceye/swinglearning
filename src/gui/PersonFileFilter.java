@@ -10,17 +10,17 @@ public class PersonFileFilter extends FileFilter {
     @Override
     public boolean accept(File f) {
 
-        if(f.isDirectory()){
+        if (f.isDirectory()) {
             return true;
         }
 
         String name = f.getName();
         String extension = Utils.getFileExtension(name);
-        if(extension == null){
+        if (extension == null) {
             return false;
         }
 
-        if(extension.equals("per")){
+        if (extension.equals("per")) {
             return true;
         }
 

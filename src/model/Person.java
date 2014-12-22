@@ -5,11 +5,11 @@ import java.io.Serializable;
 /**
  * Created by ming.li on 19/12/2014.
  */
-public class Person implements Serializable{
+public class Person implements Serializable {
 
     private static final long serialVersionUID = -4693699931744432662L;
 
-    private static int count = 0;
+    private static int count = 1;
     private int id;
     private String name;
     private String occupation;

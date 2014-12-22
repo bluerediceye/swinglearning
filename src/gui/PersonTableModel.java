@@ -17,7 +17,7 @@ public class PersonTableModel extends AbstractTableModel {
     public PersonTableModel() {
     }
 
-    public void setData(List<Person> db){
+    public void setData(List<Person> db) {
         this.db = db;
     }
 
@@ -40,7 +40,7 @@ public class PersonTableModel extends AbstractTableModel {
     public Object getValueAt(int rowIndex, int columnIndex) {
         Person person = db.get(rowIndex);
 
-        switch (columnIndex){
+        switch (columnIndex) {
             case 0:
                 return person.getId();
             case 1:
