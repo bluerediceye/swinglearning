@@ -3,6 +3,8 @@ package controller;
 import gui.FormEvent;
 import model.*;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -64,5 +66,13 @@ public class Controller {
         Person person = new Person(name, occupation, ageCategory, employmentCategory, taxId, isUS, genderCategory);
 
         database.addPerson(person);
+    }
+
+    public void saveToFile(File file) throws IOException {
+        database.saveToFile(file);
+    }
+
+    public void loadFromFIle(File file) throws IOException {
+        database.loadFromFIle(file);
     }
 }
