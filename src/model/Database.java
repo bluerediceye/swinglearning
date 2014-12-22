@@ -1,9 +1,7 @@
 package model;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by ming.li on 19/12/2014.
@@ -12,7 +10,7 @@ public class Database {
     private List<Person> people;
 
     public Database() {
-        people = new ArrayList<>();
+        people = new LinkedList<>();
     }
 
     public Database(List<Person> people) {
@@ -24,7 +22,7 @@ public class Database {
     }
 
     public List<Person> getPeople() {
-        return people;
+        return Collections.unmodifiableList(people);
     }
 
     public void saveToFile(File file) throws IOException {
@@ -49,5 +47,9 @@ public class Database {
             e.printStackTrace();
         }
         ois.close();
+    }
+
+    public void removePerson(int index) {
+        people.remove(index);
     }
 }
