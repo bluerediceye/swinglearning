@@ -1,6 +1,7 @@
 package gui;
 
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -29,56 +30,7 @@ public class PrefsDialog extends JDialog {
         passwordField = new JPasswordField(10);
         passwordField.setEchoChar('*');
 
-        setLayout(new GridBagLayout());
-        GridBagConstraints gc = new GridBagConstraints();
-        gc.gridy = 0;
-
-        //First row
-
-        gc.weightx = 1;
-        gc.weighty = 1;
-        gc.fill = GridBagConstraints.NONE;
-
-        gc.gridx = 0;
-        add(new JLabel("User: "), gc);
-
-        gc.gridx ++;
-        add(userField, gc);
-
-        //next row
-        gc.gridy++;
-
-        gc.weightx = 1;
-        gc.weighty = 1;
-        gc.fill = GridBagConstraints.NONE;
-
-        gc.gridx = 0;
-        add(new JLabel("Password: "), gc);
-
-        gc.gridx ++;
-        add(passwordField, gc);
-
-        //Next row
-        gc.gridy++;
-        gc.weightx = 1;
-        gc.weighty = 1;
-        gc.fill = GridBagConstraints.NONE;
-
-        gc.gridx = 0;
-        add(new JLabel("Port: "), gc);
-
-        gc.gridx ++;
-        add(portSpinner, gc);
-
-        //Next row
-        gc.gridy ++;
-
-        gc.gridx = 0;
-        add(okButton, gc);
-
-        gc.gridx ++;
-        add(cancelButton, gc);
-
+        layoutControl();
 
         okButton.addActionListener(new ActionListener() {
             @Override
@@ -100,8 +52,86 @@ public class PrefsDialog extends JDialog {
             }
         });
 
-        setSize(400, 300);
+        setSize(340, 250);
         setLocationRelativeTo(parent);
+    }
+
+    private void layoutControl() {
+        JPanel controlPanel = new JPanel();
+        JPanel buttonPanel = new JPanel();
+
+        int space = 15;
+        Border spaceBorder = BorderFactory.createEmptyBorder(space,space, space, space);
+        Border titleBorder = BorderFactory.createTitledBorder("Database preferences");
+
+        controlPanel.setBorder(BorderFactory.createCompoundBorder(spaceBorder, titleBorder));
+        buttonPanel.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+
+        controlPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gc = new GridBagConstraints();
+        gc.gridy = 0;
+        Insets rightPadding = new Insets(0,0,0,15);
+        Insets noPadding = new Insets(0,0,0,0);
+        //First row
+
+        gc.weightx = 1;
+        gc.weighty = 1;
+        gc.fill = GridBagConstraints.NONE;
+
+        gc.anchor = GridBagConstraints.EAST;
+        gc.insets = rightPadding;
+        gc.gridx = 0;
+        controlPanel.add(new JLabel("User: "), gc);
+
+        gc.anchor = GridBagConstraints.WEST;
+        gc.insets = noPadding;
+        gc.gridx ++;
+        controlPanel.add(userField, gc);
+
+        //next row
+        gc.gridy++;
+
+        gc.weightx = 1;
+        gc.weighty = 1;
+        gc.fill = GridBagConstraints.NONE;
+        gc.anchor = GridBagConstraints.EAST;
+        gc.insets = rightPadding;
+        gc.gridx = 0;
+        controlPanel.add(new JLabel("Password: "), gc);
+
+        gc.anchor = GridBagConstraints.WEST;
+        gc.insets = noPadding;
+        gc.gridx ++;
+        controlPanel.add(passwordField, gc);
+
+        //Next row
+        gc.gridy++;
+        gc.weightx = 1;
+        gc.weighty = 1;
+        gc.fill = GridBagConstraints.NONE;
+        gc.anchor = GridBagConstraints.EAST;
+        gc.insets = rightPadding;
+        gc.gridx = 0;
+        controlPanel.add(new JLabel("Port: "), gc);
+
+        gc.anchor = GridBagConstraints.WEST;
+        gc.insets = noPadding;
+        gc.gridx ++;
+        controlPanel.add(portSpinner, gc);
+
+        //Button panel
+        buttonPanel.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        buttonPanel.add(okButton);
+        buttonPanel.add(cancelButton);
+
+        Dimension btnSize = cancelButton.getPreferredSize();
+        okButton.setPreferredSize(btnSize);
+
+        //Add sub panels to dialog
+        setLayout(new BorderLayout());
+        add(controlPanel, BorderLayout.CENTER);
+        add(buttonPanel, BorderLayout.SOUTH);
+
     }
 
     public void setDefaults(String user, String password, int port){
